@@ -1,0 +1,21 @@
+name: Deploy
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+ 
+jobs:
+  deploy_code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: |
+          sh ./script.sh
+          pwd && ls -l 
+
+      - name: Run Ansible playbook
+        uses: dawidd6/action-ansible-playbook@v2.5.0
+        with:
+          playbook: webserver.yml # path to your Ansible playbook
+          directory: ./
+          inventory: inventory # the ansible inventory to use, stored as "ansible_inventory" in the GitHub secrets
